@@ -88,6 +88,16 @@ class BookingResponse(BaseModel):
     admin_notes: Optional[str] = None
     created_at: datetime
     equipment: Optional[EquipmentResponse] = None
+    user: Optional[UserResponse] = None
 
     class Config:
         from_attributes = True
+
+class BookingDecision(BaseModel):
+    status: str
+    admin_notes: Optional[str] = None
+
+class RentalReturn(BaseModel):
+    is_late: bool = False
+    is_damaged: bool = False
+    admin_notes: Optional[str] = None
