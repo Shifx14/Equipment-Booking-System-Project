@@ -4,6 +4,7 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
 import Login from './pages/Auth/Login';
+import AdminInventory from './pages/Admin/Inventory';
 
 const Placeholder = ({ title }) => (
   <div className="p-8">
@@ -32,7 +33,7 @@ function App() {
             {/* Admin Routes */}
             <Route path="/admin" element={<Navigate to="/admin/bookings" replace />} />
             <Route path="/admin/bookings" element={<Placeholder title="Bookings Queue" />} />
-            <Route path="/admin/inventory" element={<Placeholder title="Inventory Manager" />} />
+            <Route path="/admin/inventory" element={<AdminInventory />} />
             <Route path="/admin/rentals" element={<Placeholder title="Rentals Desk" />} />
             <Route path="/admin/users" element={<Placeholder title="User Management" />} />
             <Route path="/admin/tickets" element={<Placeholder title="Support Tickets" />} />
