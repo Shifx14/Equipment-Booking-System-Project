@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from datetime import datetime
+from typing import List
 from database import get_db
 import models
 import schemas
@@ -36,3 +36,43 @@ def create_booking(
     db.commit()
     db.refresh(new_booking)
     return new_booking
+
+@router.get("/api/bookings/requests", response_model=List[schemas.BookingResponse])
+def get_user_requests(
+    db: Session = Depends(get_db), 
+    current_user: models.User = Depends(get_current_user)
+):
+    return db.query(models.Booking).filter(
+        models.Booking.user_id == current_user.id,
+        models.Booking.status == "pending"
+    ).all()
+
+@router.delete("/api/bookings/requests/{booking_id}")
+def cancel_booking_request(
+    booking_id: int, 
+    db: Session = Depends(get_db), 
+    current_user: models.User = Depends(get_current_user)
+):
+    booking = db.query(models.Booking).filter(
+        models.Booking.id == booking_id, 
+        models.Booking.user_id == current_user.id
+    ).first()
+    
+    if not booking:
+        raise HTTPException(status_code=404, detail="Booking request not found")
+    if booking.status != "pending":
+        raise HTTPException(status_code=400, detail="Only pending requests can be cancelled")
+    
+    db.delete(booking)
+    db.commit()
+    return {"message": "Booking request cancelled successfully"}
+
+@router.get("/api/bookings/inventory", response_model=List[schemas.BookingResponse])
+def get_user_inventory(
+    db: Session = Depends(get_db), 
+    current_user: models.User = Depends(get_current_user)
+):
+    return db.query(models.Booking).filter(
+        models.Booking.user_id == current_user.id,
+        models.Booking.status.in_(["pending_issue", "issued", "returned"])
+    ).all()

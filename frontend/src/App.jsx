@@ -4,8 +4,16 @@ import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
 import Login from './pages/Auth/Login';
+
+// Admin Pages
 import AdminInventory from './pages/Admin/Inventory';
+import AdminBookings from './pages/Admin/Bookings';
+import AdminRentals from './pages/Admin/Rentals';
+
+// User Pages
 import EquipmentCatalog from './pages/User/EquipmentCatalog';
+import UserRequests from './pages/User/Requests';
+import UserInventory from './pages/User/Inventory';
 
 const Placeholder = ({ title }) => (
   <div className="p-8">
@@ -24,8 +32,8 @@ function App() {
           <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
             {/* User Routes */}
             <Route path="/" element={<EquipmentCatalog />} />
-            <Route path="/requests" element={<Placeholder title="My Requests" />} />
-            <Route path="/inventory" element={<Placeholder title="My Inventory" />} />
+            <Route path="/requests" element={<UserRequests />} />
+            <Route path="/inventory" element={<UserInventory />} />
             <Route path="/support" element={<Placeholder title="Support Desk" />} />
             <Route path="/settings" element={<Placeholder title="User Settings" />} />
           </Route>
@@ -33,9 +41,9 @@ function App() {
           <Route element={<ProtectedRoute requireAdmin={true}><MainLayout /></ProtectedRoute>}>
             {/* Admin Routes */}
             <Route path="/admin" element={<Navigate to="/admin/bookings" replace />} />
-            <Route path="/admin/bookings" element={<Placeholder title="Bookings Queue" />} />
+            <Route path="/admin/bookings" element={<AdminBookings />} />
             <Route path="/admin/inventory" element={<AdminInventory />} />
-            <Route path="/admin/rentals" element={<Placeholder title="Rentals Desk" />} />
+            <Route path="/admin/rentals" element={<AdminRentals />} />
             <Route path="/admin/users" element={<Placeholder title="User Management" />} />
             <Route path="/admin/tickets" element={<Placeholder title="Support Tickets" />} />
             <Route path="/admin/settings" element={<Placeholder title="Admin Settings" />} />
