@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr
 from datetime import datetime
-from typing import Optional
+from typing import Optional, List
 
 class UserCreate(BaseModel):
     name: str
@@ -101,3 +101,37 @@ class RentalReturn(BaseModel):
     is_late: bool = False
     is_damaged: bool = False
     admin_notes: Optional[str] = None
+
+class TicketCommentCreate(BaseModel):
+    comment: str
+
+class TicketCommentResponse(BaseModel):
+    id: int
+    ticket_id: int
+    sender_id: int
+    comment: str
+    created_at: datetime
+    sender: Optional[UserResponse] = None
+
+    class Config:
+        from_attributes = True
+
+class SupportTicketCreate(BaseModel):
+    subject: str
+    category: str
+    initial_comment: str
+
+class SupportTicketResponse(BaseModel):
+    id: int
+    user_id: int
+    subject: str
+    category: str
+    status: str
+    created_at: datetime
+    user: Optional[UserResponse] = None
+
+    class Config:
+        from_attributes = True
+
+class TicketStatusUpdate(BaseModel):
+    status: str
