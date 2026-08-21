@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
 import Login from './pages/Auth/Login';
 import AdminInventory from './pages/Admin/Inventory';
+import EquipmentCatalog from './pages/User/EquipmentCatalog';
 
 const Placeholder = ({ title }) => (
   <div className="p-8">
@@ -22,7 +23,7 @@ function App() {
           
           <Route element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
             {/* User Routes */}
-            <Route path="/" element={<Placeholder title="Equipment Catalog" />} />
+            <Route path="/" element={<EquipmentCatalog />} />
             <Route path="/requests" element={<Placeholder title="My Requests" />} />
             <Route path="/inventory" element={<Placeholder title="My Inventory" />} />
             <Route path="/support" element={<Placeholder title="Support Desk" />} />

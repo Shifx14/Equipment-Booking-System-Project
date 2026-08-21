@@ -67,3 +67,27 @@ class EquipmentResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+class BookingCreate(BaseModel):
+    equipment_id: int
+    quantity: int
+    start_date: datetime
+    due_date: datetime
+
+class BookingResponse(BaseModel):
+    id: int
+    user_id: int
+    equipment_id: int
+    quantity: int
+    start_date: datetime
+    due_date: datetime
+    returned_at: Optional[datetime] = None
+    status: str
+    is_late: bool
+    is_damaged: bool
+    admin_notes: Optional[str] = None
+    created_at: datetime
+    equipment: Optional[EquipmentResponse] = None
+
+    class Config:
+        from_attributes = True
