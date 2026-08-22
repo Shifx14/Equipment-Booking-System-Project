@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Shield, ShieldAlert, KeyRound, Ban } from 'lucide-react';
+import { Shield, ShieldAlert, KeyRound, Ban, User } from 'lucide-react';
 
 const Users = () => {
   const [users, setUsers] = useState([]);
